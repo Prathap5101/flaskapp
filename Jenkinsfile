@@ -5,8 +5,7 @@ node {
   }
   
   stage ('Docker image build') {
-    BUILD_IMAGE=suman/flaskapp
-    app = docker.build("$BUILD_IMAGE")
+    app = docker.build("suman/flaskapp")
   }
   
   stage('Push image to Docker Registry') {
@@ -21,7 +20,7 @@ node {
     }
   
   stage ('Application deploy on Docker') {
-    sh "docker run -d -p 7373:5000 $BUILD_IMAGE"
+    sh "docker run -d -p 7373:5000 suman/flaskapp"
   }
 
   stage ('Launch Info') {
