@@ -1,10 +1,12 @@
 node {
+  def app
   stage ('SCM Checkout') {
     checkout scm
   }
   
   stage ('Docker image build') {
-    sh 'docker build -t suman/flaskapp .'
+    //sh 'docker build -t suman/flaskapp .'
+    app = docker.build("suman/flaskapp")
   }
   
   stage('Push image to Docker Registry') {
