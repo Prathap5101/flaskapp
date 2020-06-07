@@ -5,7 +5,7 @@ node {
   }
   
   stage ('Docker image build') {
-    app = docker.build("suman/flaskapp")
+    app = docker.build("prathaps/flaskapp")
   }
   
   stage('Push image to Docker Registry') {
@@ -19,12 +19,12 @@ node {
         }
     }
   
-  stage ('Application deploy on Docker') {
-    sh "docker run -d -p 7373:5000 suman/flaskapp"
+  stage ('Application deploy on kubernetes') {
+    sh "kubectl create deployment pythonflask --image=prathaps/flaskapp"
   }
 
-  stage ('Launch Info') {
+  stage ('Launching the service') {
     echo "=================="
-    sh "docker ps -a"
+    sh "kubectl expose deployment pythonflask --name pythonappservice --port 5000 --type NodePort"
   }
 }
